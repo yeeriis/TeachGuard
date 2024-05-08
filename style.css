@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Inria Sans';
+    src: url('fonts/InriaSans-Regular.woff2') format('woff2'),
+         url('fonts/InriaSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Inria Sans', Arial, sans-serif;
+}
+
+/* Estilos para el menú */
+#menu {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 50px;
+    align-items: center;
+}
+
+#logo img {
+    height: 50px;
+    width: auto;
+}
+
+.boton {
+    background-color: #555;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.boton:hover {
+    background-color: #777;
+}
+
+
+/* FIN ESTILOS PARA MENÚ */
