@@ -23,16 +23,16 @@ class LoginController
             if ($usuario && $usuario["contrasena"] === $contrasena) {
                 if ($usuario["rol"] === "administrador") {
                     $_SESSION["nombre"] = $nombre;
-                    echo "Redirigiendo...";
+                    echo "Redirigint...";
                     echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarMainAdmin'>";
                     exit();
                 } else {
-                    echo "No tienes permisos para acceder a esta área.";
+                    echo "No tens permisos per accedir a aquesta àrea.";
                     echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginAdmin'>";
 
                 }
             } else {
-                echo "Error de logueo";
+                echo "Error de logueig";
                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginAdmin'>";
             }
             
@@ -64,16 +64,16 @@ class LoginController
             if ($usuario && $usuario["contrasena"] === $contrasena) {
                 if ($usuario["rol"] === "conserge") {
                     $_SESSION["nombre"] = $nombre;
-                    echo "Redirigiendo...";
+                    echo "Redirigint...";
                     echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarMainConserge'>";
                     exit();
                 } else {
-                    echo "No tienes permisos para acceder a esta área.";
+                    echo "No tens permisos per accedir a aquesta àrea.";
                     echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginConserge'>";
 
                 }
             } else {
-                echo "Error de logueo";
+                echo "Error de logueig";
                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginConserge'>";
             }
             

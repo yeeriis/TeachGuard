@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Inria Sans';
     src: url('fonts/InriaSans-Regular.woff2') format('woff2'),
-         url('fonts/InriaSans-Regular.woff') format('woff');
+        url('fonts/InriaSans-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -27,18 +27,135 @@ body {
 }
 
 .boton {
-    background-color: #555;
+    background-color: #2A9D8F;
     border: none;
-    color: white;
+    color: black;
     padding: 10px 20px;
     margin-left: 10px;
+    border-radius: 60px;
     cursor: pointer;
     text-decoration: none;
+    transition: 0.3s ease-in-out;
 }
 
 .boton:hover {
-    background-color: #777;
+    opacity: 0.7;
+    border-radius: 0px;
 }
 
-
 /* FIN ESTILOS PARA MENÚ */
+
+/* Estilos para el login del admin/conserge */
+
+.loginDiv {
+    margin: auto;
+    text-align: center;
+    background-color: #264653;
+    border-radius: 60px;
+    width: 600px;
+    padding-bottom: 50px;
+    padding-top: 10px;
+}
+
+#labelNombre, #labelContrasena {
+    color: #E0F2E9;
+    margin-right: 10px;
+    text-align: right;
+}
+
+#nombre, #contrasena {
+    border-radius: 60px;
+    background-color: #E0F2E9;
+    border: none;
+    height: 30px;
+    text-align: left;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px; /* Espacio entre cada input */
+}
+
+.inputContainer label {
+    flex: 1;
+}
+
+.inputContainer input {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 20%;
+}
+
+.titolLogin {
+    color: #E0F2E9;
+    padding-bottom: 50px;
+}
+
+.submitBoton {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 60px;
+    background-color: #2A9D8F;
+    color: #E0F2E9;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+
+.submitBoton:hover {
+    background-color: #60bdb2;
+    border-radius: 0;
+}
+
+/* Fin de los estilos para el login del admin/conserge */
+
+
+/* Estilos para Pagina Main del Admin (DIV triple) */
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.container a {
+    text-align: center;
+    padding: 20px;
+    background-color: #2A9D8F;
+    border-radius: 60px;
+    margin: 0 20px;
+    text-decoration: none;
+    color: black;
+    transition: 0.3s ease-in-out;
+}
+
+.container a:hover {
+    opacity: 0.7;
+    border-radius: 0px;
+}
+
+.titolBenvingudaAdmin {
+    padding: 25px 0px 50px 10px;
+}
+
+/* Estilos para Pagina Main del Admin (DIV triple) */
+
+
+/* Estilos para Drag&Drop de archivos del administrador */
+
+.drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.drop-instruction {
+    font-size: 18px;
+}
+
+.table-container {
+    margin-top: 20px;
+}
