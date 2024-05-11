@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropAreaProfessors = document.getElementById('drop-area-professors');
     const fileInputProfessors = document.getElementById('file-input-professors');
 
-    // Manejo de archivos de profesores
     function handleFileProfessors(file) {
         if (file.type === 'text/plain') {
             readFileContentProfessors(file);
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
 
         lines.forEach((line) => {
-            // Parsear línea para obtener los datos del profesor
             const data = parseProfessorData(line);
             if (data) {
                 const { codi_professor, nom, cognoms, carrec } = data;

@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function parseHorarioData(line) {
         const data = line.split(',');
         const codi_horari = parseInt(data[0]);
-        const classe = data[1] ? data[1].replace(/"/g, '') : ''; // Manejar campo de clase vacío
-        const professor = data[2] ? data[2].replace(/"/g, '') : ''; // Manejar campo de profesor vacío
-        const asignatura = data[3] ? data[3].replace(/"/g, '') : ''; // Manejar campo de asignatura vacío
-        const aula = data[4] ? data[4].replace(/"/g, '') : ''; // Manejar campo de aula vacío
+        const classe = data[1] ? data[1].replace(/"/g, '') : '';
+        const professor = data[2] ? data[2].replace(/"/g, '') : '';
+        const asignatura = data[3] ? data[3].replace(/"/g, '') : '';
+        const aula = data[4] ? data[4].replace(/"/g, '') : '';
         const dia = parseInt(data[5]);
         const hora = parseInt(data[6]);
         return {
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function sendDataToServerHorarios(codi_horari, classe, professor, asignatura, aula, dia, hora) {
-        // Verificar si todos los campos obligatorios están presentes
         if (codi_horari && dia && hora) {
             const formData = new FormData();
             formData.append('codi_horari', codi_horari);

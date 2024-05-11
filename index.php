@@ -30,7 +30,6 @@ session_start();
     if (isset($_GET['controller'])) {
         $nombreController = $_GET['controller'] . "Controller";
     } else {
-        //Controlador per dedecte
         $nombreController = "PrincipalController";
     }
     if (class_exists($nombreController)) {

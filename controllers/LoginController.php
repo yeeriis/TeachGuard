@@ -17,7 +17,6 @@ class LoginController
             $nombre = $_POST["nombre"];
             $contrasena = $_POST["contrasena"];
     
-            // Validar credenciales
             $usuario = Usuario::obtenerUsuarioPorNombre($nombre);
     
             if ($usuario && $usuario["contrasena"] === $contrasena) {
@@ -58,7 +57,6 @@ class LoginController
             $nombre = $_POST["nombre"];
             $contrasena = $_POST["contrasena"];
     
-            // Validar credenciales
             $usuario = Usuario::obtenerUsuarioPorNombre($nombre);
     
             if ($usuario && $usuario["contrasena"] === $contrasena) {
