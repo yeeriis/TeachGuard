@@ -1,30 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('file-input');
-    const submitBtn = document.getElementById('submit-btn');
+    const dropAreaAules = document.getElementById('drop-area-aules');
+    const fileInputAules = document.getElementById('file-input-aules');
 
-    function handleFile(file) {
+    // Manejo de archivos de aulas
+    function handleFileAules(file) {
         if (file.type === 'text/plain') {
-            readFileContent(file);
+            readFileContentAules(file);
         } else {
             alert('Por favor, selecciona un archivo TXT.');
         }
     }
 
-    function readFileContent(file) {
+    function readFileContentAules(file) {
         const reader = new FileReader();
         reader.onload = () => {
             const content = reader.result;
-            processTxtData(content);
+            processTxtDataAules(content);
         };
         reader.readAsText(file);
     }
 
-    function processTxtData(content) {
+    function processTxtDataAules(content) {
         const lines = content.split('\n');
-        const tableBody = document.getElementById('table-body');
+        const tableBody = document.getElementById('table-body-aules');
         tableBody.innerHTML = '';
-    
+
         lines.forEach((line) => {
             const matches = line.match(/"([^"]+)"/g);
             if (matches && matches.length >= 2) {
@@ -36,16 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${nombre_curso}</td>
                 `;
                 tableBody.appendChild(row);
-                sendDataToServer(nombre_aula, nombre_curso);
+                sendDataToServerAules(nombre_aula, nombre_curso);
             }
         });
     }
 
-    function sendDataToServer(nombre_aula, nombre_curso) {
+    function sendDataToServerAules(nombre_aula, nombre_curso) {
         const formData = new FormData();
         formData.append('nombre_aula', nombre_aula);
         formData.append('nombre_curso', nombre_curso);
-    
+
         fetch('views/admin/processarArxiu.php', {
             method: 'POST',
             body: formData
@@ -64,24 +64,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    dropArea.addEventListener('dragover', (event) => {
+    dropAreaAules.addEventListener('dragover', (event) => {
         event.preventDefault();
-        dropArea.classList.add('drag-over');
+        dropAreaAules.classList.add('drag-over');
     });
 
-    dropArea.addEventListener('dragleave', () => {
-        dropArea.classList.remove('drag-over');
+    dropAreaAules.addEventListener('dragleave', () => {
+        dropAreaAules.classList.remove('drag-over');
     });
 
-    dropArea.addEventListener('drop', (event) => {
+    dropAreaAules.addEventListener('drop', (event) => {
         event.preventDefault();
-        dropArea.classList.remove('drag-over');
+        dropAreaAules.classList.remove('drag-over');
         const file = event.dataTransfer.files[0];
-        handleFile(file);
+        handleFileAules(file);
     });
 
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        handleFile(file);
+    fileInputAules.addEventListener('change', () => {
+        const file = fileInputAules.files[0];
+        handleFileAules(file);
     });
 });

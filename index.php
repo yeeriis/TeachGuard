@@ -12,7 +12,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="script.js"></script>
+    <script src="script-aules.js"></script>
+    <script src="script-professors.js"></script>
     <link rel="icon" type="image/png" sizes="16x16" href="img/logo.png">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>TeachGuard</title>
@@ -56,7 +57,6 @@ session_start();
             break;
     }
     ?>
+
 </body>
-
-
 </html>

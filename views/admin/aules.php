@@ -1,8 +1,7 @@
-<div id="drop-area" class="drop-area">
+<div id="drop-area-aules" class="drop-area">
         <div class="drop-instruction">Arrastra y suelta un archivo TXT aquí</div>
-        <input type="file" id="file-input" accept=".txt">
+        <input type="file" id="file-input-aules" accept=".txt">
     </div>
-    <button id="submit-btn">Enviar</button>
     <div id="table-container" class="table-container"></div>
 
     <table id="data-table" border="1">
@@ -12,5 +11,5 @@
             <th>Nom Curs</th>
         </tr>
     </thead>
-    <tbody id="table-body"></tbody>
+    <tbody id="table-body-aules"></tbody>
 </table>
