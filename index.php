@@ -14,6 +14,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="script-aules.js"></script>
     <script src="script-professors.js"></script>
+    <script src="script-horaris.js"></script>
     <link rel="icon" type="image/png" sizes="16x16" href="img/logo.png">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>TeachGuard</title>

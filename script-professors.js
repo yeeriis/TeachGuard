@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nom = data[28].replace(/"/g, '');
         const cognoms = data[1].replace(/"/g, '');
         const carrec = data[23].replace(/"/g, '');
-        
+
         return {
             codi_professor,
             nom,
@@ -69,18 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al enviar los datos de profesores al servidor.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Datos de profesores insertados correctamente:', data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al enviar los datos de profesores al servidor.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos de profesores insertados correctamente:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     dropAreaProfessors.addEventListener('dragover', (event) => {

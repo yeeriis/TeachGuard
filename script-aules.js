@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropAreaAules = document.getElementById('drop-area-aules');
     const fileInputAules = document.getElementById('file-input-aules');
 
-    // Manejo de archivos de aulas
     function handleFileAules(file) {
         if (file.type === 'text/plain') {
             readFileContentAules(file);
