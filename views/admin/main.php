@@ -4,4 +4,5 @@
     <a href="index.php?controller=Admin&action=mostrarFormAules">Importar Aules</a>
     <a href="index.php?controller=Admin&action=mostrarFormProfessors">Importar Professors</a>
     <a href="index.php?controller=Admin&action=mostrarFormHoraris">Importar Horaris</a>
+    <a href="index.php?controller=Admin&action=mostrarGestioGuardies">Gestionar Guàrdies</a>
 </div>

@@ -15,6 +15,7 @@ session_start();
     <script src="script-aules.js"></script>
     <script src="script-professors.js"></script>
     <script src="script-horaris.js"></script>
+    <script src="script-guardies.js"></script>
     <link rel="icon" type="image/png" sizes="16x16" href="img/logo.png">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>TeachGuard</title>

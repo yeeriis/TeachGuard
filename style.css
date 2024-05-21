@@ -55,6 +55,7 @@ body {
     width: 600px;
     padding-bottom: 50px;
     padding-top: 10px;
+    margin-top: 100px;
 }
 
 #labelNombre, #labelContrasena {
@@ -75,7 +76,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: 20px; /* Espacio entre cada input */
+    margin-bottom: 20px;
 }
 
 .inputContainer label {
@@ -86,9 +87,10 @@ body {
     flex: 1;
     margin-left: 10px;
     margin-right: 20%;
+    padding-left: 10px;
 }
 
-.titolLogin {
+.titolLogin, .titolGestioGuardies {
     color: #E0F2E9;
     padding-bottom: 50px;
 }
@@ -103,6 +105,7 @@ body {
     color: #E0F2E9;
     border: none;
     transition: 0.3s ease-in-out;
+    font-weight: bold;
 }
 
 .submitBoton:hover {
@@ -159,3 +162,106 @@ body {
 .table-container {
     margin-top: 20px;
 }
+
+/* Estilos para tabla Guardias Profesores de Admin */
+
+.taulaGestioGuardiesAdmin table {
+    margin: auto;
+    width: 100%;
+}
+
+.taulaGestioGuardiesAdmin {
+    margin: auto;
+    text-align: center;
+    background-color: #264653;
+    border-radius: 60px;
+    width: 95%;
+    padding-bottom: 50px;
+    padding-top: 10px;
+    margin-top: 100px;
+    border: none;
+}
+
+.taulaGestioGuardiesAdmin th {
+    border: none;
+    background-color: #2A9D8F;
+    color: #E0F2E9;
+    border-radius: 60px;
+    padding: 1%;
+    font-size: large;
+}
+
+.taulaGestioGuardiesAdmin td {
+    border: none;
+    font-size: large;
+    padding: 1%;
+    color: #E0F2E9;
+    transition: all 0.2s ease-in-out;
+
+}
+
+.taulaGestioGuardiesAdmin td ul li{
+    border: none;
+    list-style: none;
+}
+
+.profesores-clase-select {
+    background-color: #2A9D8F;
+    border-radius: 60px;
+    padding: 2%;
+    border-style: none;
+    transition: all 0.2s ease-in-out;
+    font-size: large;
+
+}
+
+.move-right-btn, .move-left-btn {
+    background-color: #2A9D8F;
+    border-radius: 60px;
+    padding: 5%;
+    border-style: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.add-comment-btn {
+    background-color: #2A9D8F;
+    border-radius: 60px;
+    padding: 10%;
+    border-style: none;
+    transition: all 0.2s ease-in-out;
+    font-size: large;
+}
+
+#guardarButton {
+    background-color: #2A9D8F;
+    border-radius: 60px;
+    padding: 1%;
+    border-style: none;
+    transition: all 0.2s ease-in-out;
+    font-size: large;
+}
+.profesores-clase-select:hover,  .move-left-btn:hover, .move-right-btn:hover, .add-comment-btn:hover, #guardarButton:hover {
+    opacity: 0.7;
+    border-radius: 0;
+}
+
+.faltados-list {
+    color: #E0F2E9;
+    font-size: large;
+    list-style: none;
+    padding: none;
+}
+
+.even {
+    background-color: #E0F2E9; /* Color para filas pares */
+}
+
+.odd {
+    background-color: #F9F9ED; /* Color para filas impares */
+}
+
+.data-actual {
+    color: #E0F2E9;
+}
+
+/* Fin de estilos para tabla Guardias Profesores de Admin */
