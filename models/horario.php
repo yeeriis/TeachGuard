@@ -74,19 +74,38 @@ class Horario extends Database {
         }
     }
 
-    // Método para guardar un comentario para una hora específica
-    public static function guardarComentario($hora, $comentario) {
+    public function obtenerProfesoresAusentes($hora) {
         try {
-            $stmt = self::$db->prepare("UPDATE hores SET comentari = ? WHERE hora = ?");
-            $stmt->bindParam(1, $comentario, PDO::PARAM_STR);
-            $stmt->bindParam(2, $hora, PDO::PARAM_INT);
+            $diaSemanaActual = date('N');
+            $stmt = $this->db->prepare("SELECT p.nom, p.cognoms
+                                        FROM absencies a
+                                        INNER JOIN professors p ON a.professor_id = p.codi_professor
+                                        WHERE a.dia_id = ? AND a.hora = ?");
+            $stmt->bindParam(1, $diaSemanaActual, PDO::PARAM_INT);
+            $stmt->bindParam(2, $hora, PDO::PARAM_STR);
             $stmt->execute();
-            return true;
+            $profesoresAusentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            return $profesoresAusentes;
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
-            return false;
+            return null;
         }
     }
+
+    // Método para guardar un comentario para una hora específica
+    // public static function guardarComentario($hora, $comentario) {
+    //     try {
+    //         $stmt = self::$db->prepare("UPDATE hores SET comentari = ? WHERE hora = ?");
+    //         $stmt->bindParam(1, $comentario, PDO::PARAM_STR);
+    //         $stmt->bindParam(2, $hora, PDO::PARAM_INT);
+    //         $stmt->execute();
+    //         return true;
+    //     } catch (PDOException $e) {
+    //         echo "Error: " . $e->getMessage();
+    //         return false;
+    //     }
+    // }
 
     public function obtenirHores() {
         try {

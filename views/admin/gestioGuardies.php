@@ -1,9 +1,7 @@
 <?php
-// Obtener la fecha actual
 $fechaActual = date('d-m-Y');
 ?>
 <div class="taulaGestioGuardiesAdmin">
-    <!-- Mostrar la fecha actual -->
     <div class="data-actual">
         <h2>Data: <?php echo $fechaActual; ?></h2>
     </div>
@@ -11,8 +9,8 @@ $fechaActual = date('d-m-Y');
         <thead>
             <tr>
                 <th>Hora</th>
-                <th>Professors de Guardia</th>
-                <th>Comentaris</th>
+                <th class="hidden-mobile">Professors de Guardia</th>
+                <!-- <th>Comentaris</th> -->
                 <th>Professors Absents</th>
                 <th>Fletxes d'acció</th>
                 <th>Tots els professors</th>
@@ -21,8 +19,8 @@ $fechaActual = date('d-m-Y');
         <tbody>
             <?php foreach ($horas as $hora): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($hora); ?></td>
-                    <td>
+                    <td class="hora"><?php echo htmlspecialchars($hora); ?></td>
+                    <td class="hidden-mobile">
                         <ul>
                             <?php
                             $horario = new Horario(); // Crear una instancia de la clase Horario
@@ -40,12 +38,12 @@ $fechaActual = date('d-m-Y');
                             ?>
                         </ul>
                     </td>
-                    <td>
+                    <!-- <td>
                         <button class="add-comment-btn" data-hora="<?php echo htmlspecialchars($hora); ?>">Afegir
                             Comentari</button>
-                    </td>
+                    </td> -->
                     <td>
-                        <ul class="faltados-list" data-hora="<?php echo htmlspecialchars($hora); ?>"></ul>
+                        <li class="faltados-list" data-hora="<?php echo htmlspecialchars($hora); ?>"></li>
                     </td>
                     <td>
                         <button class="move-left-btn" data-hora="<?php echo htmlspecialchars($hora); ?>"><img
