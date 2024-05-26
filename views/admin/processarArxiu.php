@@ -25,7 +25,7 @@ if (isset($_POST['nombre_aula']) && isset($_POST['nombre_curso'])) {
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 } else {
-    echo json_encode(['success' => false, 'error' => 'No se recibieron los datos esperados.']);
+    echo json_encode(['success' => false, 'error' => 'No se han rebut les dades esperades.']);
 }
 
 ?>

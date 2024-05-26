@@ -8,11 +8,12 @@
 
 body {
     font-family: 'Inria Sans', Arial, sans-serif;
+    background-color: #ccc;
 }
 
 /* Estilos para el menú */
 #menu {
-    background-color: #264653;
+    background-color:darkgray;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -20,11 +21,15 @@ body {
     height: 50px;
     border-radius: 60px;
     align-items: center;
+    width: 90%;
+    margin: auto;
+    height: 100px;
 }
 
 #logo img {
-    height: 50px;
+    height: 80px;
     width: auto;
+    padding-left: 25%;
 }
 
 .boton {
@@ -144,7 +149,9 @@ body {
 }
 
 .titolBenvingudaAdmin {
-    padding: 25px 0px 50px 10px;
+    padding: 50px 0px 50px 10px;
+    width: 90%;
+    margin: auto;
 }
 
 /* FIN Estilos para Pagina Main del Admin (DIV triple) */
@@ -153,10 +160,14 @@ body {
 /* Estilos para Drag&Drop de archivos del administrador */
 
 .drop-area {
-    border: 2px dashed #ccc;
-    padding: 20px;
+    border: 2px dashed #264653;
+    padding: 40px 0px 40px 0px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 200px;
+    margin-top: 20px;
+    border-radius: 60px;
+    width: 90%;
+    margin: auto;
 }
 
 .drop-instruction {
@@ -165,6 +176,32 @@ body {
 
 .table-container {
     margin-top: 20px;
+    background-color: #264653;
+
+}
+
+#data-table {
+    background-color: #264653;
+    border: none;
+    border-radius: 60px;
+    padding: 10px;
+    margin: auto;
+    width: 70%;
+}
+
+#data-table tr th {
+    background-color: #2A9D8F;
+    border-radius: 60px;
+    border: none;
+    padding: 20px;
+    width: 50%;
+}
+#data-table tr td {
+    background-color: #60bdb2;
+    border-radius: 60px;
+    border: none;
+    padding: 10px;
+    text-align: center;
 }
 
 /* Estilos para tabla Guardias Profesores de Admin */
@@ -179,11 +216,13 @@ body {
     text-align: center;
     background-color: #264653;
     border-radius: 60px;
-    width: 95%;
+    width: 90%;
     padding-bottom: 50px;
     padding-top: 10px;
     margin-top: 100px;
     border: none;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 .taulaGestioGuardiesAdmin th {

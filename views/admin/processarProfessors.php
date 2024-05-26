@@ -29,7 +29,7 @@ if (isset($_POST['codi_professor']) && isset($_POST['nom']) && isset($_POST['cog
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 } else {
-    echo json_encode(['success' => false, 'error' => 'No se recibieron los datos esperados.']);
+    echo json_encode(['success' => false, 'error' => 'No se han rebut les dades esperades.']);
 }
 
 ?>

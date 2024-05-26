@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const guardarButton = document.getElementById('guardarButton');
     let ausencias = [];
 
-    
-
     moveLeftButtons.forEach(button => {
         button.addEventListener('click', function() {
             const hora = this.dataset.hora;
@@ -59,18 +57,19 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(ausencias)
         })
-        .then(response => response.text())
-        .then(text => {
-            console.log('Respuesta del servidor:', text);
-            const data = JSON.parse(text);
+        .then(response => response.json())
+        .then(data => {
             if (data.success) {
-                console.log('Ausencias guardadas correctamente');
+                toastr.success('Les absències han estat desades correctament.');
                 ausencias = [];
             } else {
-                console.error('Error al guardar ausencias:', data.message);
+                toastr.error('Error al desar absències: ' + data.message);
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            toastr.error('Error al desar absències.');
+        });
     });
 
     function getDiaId() {

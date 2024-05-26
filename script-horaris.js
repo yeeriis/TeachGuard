@@ -1,12 +1,21 @@
+toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "timeOut": "5000",
+    "closeButton": true,
+    "progressBar": true
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const dropAreaHorarios = document.getElementById('drop-area-horarios');
     const fileInputHorarios = document.getElementById('file-input-horarios');
+    let totalFiles = 0;
+    let processedFiles = 0;
 
     function handleFileHorarios(file) {
         if (file.type === 'text/plain') {
             readFileContentHorarios(file);
         } else {
-            alert('Por favor, selecciona un archivo TXT.');
+            toastr.error('Si us plau, selecciona un arxiu TXT.');
         }
     }
 
@@ -40,13 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function processTxtDataHorarios(content) {
-        const lines = content.split('\n');
+        const lines = content.split('\n').filter(line => line.trim() !== '');
         const tableBody = document.getElementById('table-body-horarios');
         tableBody.innerHTML = '';
-    
+        totalFiles = lines.length;
+        processedFiles = 0;
+
         lines.forEach((line) => {
             const data = parseHorarioData(line);
-            if (data) {
+            if (data.codi_horari) {
                 const { codi_horari, classe, professor, asignatura, aula, dia, hora } = data;
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -60,10 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 tableBody.appendChild(row);
                 sendDataToServerHorarios(codi_horari, classe, professor, asignatura, aula, dia, hora);
+            } else {
+                totalFiles--;
             }
         });
     }
-    
+
     function sendDataToServerHorarios(codi_horari, classe, professor, asignatura, aula, dia, hora) {
         if (codi_horari && dia && hora) {
             const formData = new FormData();
@@ -74,28 +87,34 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('aula', aula);
             formData.append('dia', dia);
             formData.append('hora', hora);
-    
+
             fetch('views/admin/processarHoraris.php', {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al enviar los datos al servidor.');
+                    throw new Error('Error al enviar les dades al servidor.');
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Datos de horarios insertados correctamente:', data);
+                processedFiles++;
+                if (processedFiles === totalFiles) {
+                    toastr.success('Tots els horaris s\'han pujat correctament.');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
+                processedFiles++;
+                if (processedFiles === totalFiles) {
+                    toastr.error('Hi ha hagut un error en pujar alguns horaris.');
+                }
             });
         } else {
-            console.warn('Se omitió el envío de datos porque faltan campos obligatorios.');
+            console.warn('S\'ha omès l\'enviament de dades perquè falten camps obligatoris.');
         }
     }
-    
 
     dropAreaHorarios.addEventListener('dragover', (event) => {
         event.preventDefault();
@@ -117,7 +136,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = fileInputHorarios.files[0];
         handleFileHorarios(file);
     });
-
-
-
 });

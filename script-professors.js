@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dropAreaProfessors = document.getElementById('drop-area-professors');
     const fileInputProfessors = document.getElementById('file-input-professors');
+    let processedCount = 0;
 
     function handleFileProfessors(file) {
         if (file.type === 'text/plain') {
             readFileContentProfessors(file);
         } else {
-            alert('Por favor, selecciona un archivo TXT.');
+            toastr.error('Si us plau, selecciona un arxiu TXT.');
         }
     }
 
@@ -21,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseProfessorData(line) {
         const data = line.split(',');
-        const codi_professor = data[0].replace(/"/g, '');
-        const nom = data[28].replace(/"/g, '');
-        const cognoms = data[1].replace(/"/g, '');
-        const carrec = data[23].replace(/"/g, '');
+        const codi_professor = data[0] ? data[0].replace(/"/g, '') : '';
+        const nom = data[28] ? data[28].replace(/"/g, '') : '';
+        const cognoms = data[1] ? data[1].replace(/"/g, '') : '';
+        const carrec = data[23] ? data[23].replace(/"/g, '') : '';
 
         return {
             codi_professor,
@@ -35,13 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function processTxtDataProfessors(content) {
-        const lines = content.split('\n');
+        const lines = content.split('\n').filter(line => line.trim() !== '');
+        const totalFiles = lines.length;
         const tableBody = document.getElementById('table-body-professors');
         tableBody.innerHTML = '';
 
+        processedCount = 0;
+
         lines.forEach((line) => {
             const data = parseProfessorData(line);
-            if (data) {
+            if (data.codi_professor) {
                 const { codi_professor, nom, cognoms, carrec } = data;
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -51,12 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${carrec}</td>
                 `;
                 tableBody.appendChild(row);
-                sendDataToServerProfessors(codi_professor, nom, cognoms, carrec);
+                sendDataToServerProfessors(codi_professor, nom, cognoms, carrec, totalFiles);
+            } else {
+                totalFiles--;
             }
         });
     }
 
-    function sendDataToServerProfessors(codi_professor, nom, cognoms, carrec) {
+    function sendDataToServerProfessors(codi_professor, nom, cognoms, carrec, totalFiles) {
         const formData = new FormData();
         formData.append('codi_professor', codi_professor);
         formData.append('nom', nom);
@@ -69,16 +75,28 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al enviar los datos de profesores al servidor.');
+                    throw new Error('Error al enviar les dades dels professors al servidor.');
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Datos de profesores insertados correctamente:', data);
+                console.log('Dades dels professors insertades correctament:', data);
+                processedCount++;
+                if (processedCount === totalFiles) {
+                    showToastr();
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
+                processedCount++;
+                if (processedCount === totalFiles) {
+                    showToastr();
+                }
             });
+    }
+
+    function showToastr() {
+        toastr.success('Dades de professors pujades correctament.');
     }
 
     dropAreaProfessors.addEventListener('dragover', (event) => {

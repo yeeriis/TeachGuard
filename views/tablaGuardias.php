@@ -12,7 +12,6 @@ $fechaActual = date('d-m-Y');
                 <th>Professors de Guardia</th>
                 <th>Asignacions de les Guàrdies</th>
                 <th>Professors Absents</th>
-                <!-- <th>Comentaris</th> -->
             </tr>
         </thead>
         <tbody>
@@ -22,14 +21,13 @@ $fechaActual = date('d-m-Y');
                     <td>
                         <ul>
                             <?php
-                            $horario = new Horario(); // Crear una instancia de la clase Horario
+                            $horario = new Horario();
                             $profesoresGuardia = $horario->obtenerProfesoresGuardia($hora);
 
-                            // Verificar si se obtuvieron resultados
                             if ($profesoresGuardia) {
-                                // Iterar sobre los profesores de guardia y mostrarlos en una lista
                                 foreach ($profesoresGuardia as $profesor) {
-                                    echo "<li>" . htmlspecialchars($profesor['professor']) . "</li>";
+                                    echo "<li>" . htmlspecialchars($profesor['nom']) . htmlspecialchars($profesor['cognoms']) . "</li>";
+                                    echo "<br>";
                                 }
                             } else {
                                 echo "<li>No hi ha professors de guàrdia per a aquesta hora.</li>";
@@ -43,21 +41,28 @@ $fechaActual = date('d-m-Y');
                             $asignaciones = [];
                             $ausencias = $horario->obtenerProfesoresAusentes($hora);
 
-                            // Crear asignaciones
                             if ($profesoresGuardia && $ausencias) {
+                                $numProfesoresGuardia = count($profesoresGuardia);
+                                $numAusencias = count($ausencias);
                                 $i = 0;
+                        
                                 foreach ($ausencias as $ausencia) {
-                                    if (isset($profesoresGuardia[$i])) {
-                                        $asignaciones[] = htmlspecialchars($profesoresGuardia[$i]['professor']) . " ". ' -> ' . htmlspecialchars($ausencia['nom']) . " " . htmlspecialchars($ausencia['cognoms']);
+                                    if ($i < $numProfesoresGuardia) {
+                                        $profesorGuardia = $profesoresGuardia[$i];
+                                        $asignaciones[] = htmlspecialchars($profesorGuardia['nom']) . " " . htmlspecialchars($profesorGuardia['cognoms']) . " -> " . htmlspecialchars($ausencia['nom']) . " " . htmlspecialchars($ausencia['cognoms']);
                                         $i++;
+                                    } else {
+                                        echo "El/La professor/a " . htmlspecialchars($ausencia['nom']) . " " . htmlspecialchars($ausencia['cognoms']) . " no té un profesor de guàrdia assignat.";
+                                        echo "<br>";
+                                        break;
                                     }
                                 }
                             }
 
-                            // Mostrar asignaciones
                             if ($asignaciones) {
                                 foreach ($asignaciones as $asignacion) {
                                     echo "<li>$asignacion</li>";
+                                    echo "<br>";
                                 }
                             } else {
                                 echo "<li>No hi ha assignacions per a aquesta hora.</li>";
@@ -70,11 +75,10 @@ $fechaActual = date('d-m-Y');
                             <?php
                             $profesoresAusentes = $horario->obtenerProfesoresAusentes($hora);
 
-                            // Verificar si se obtuvieron resultados
                             if ($profesoresAusentes) {
-                                // Iterar sobre los profesores ausentes y mostrarlos en una lista
                                 foreach ($profesoresAusentes as $profesor) {
                                     echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . "</li>";
+                                    echo "<br>";
                                 }
                             } else {
                                 echo "<li>No hi ha professors absents per a aquesta hora.</li>";
@@ -82,24 +86,20 @@ $fechaActual = date('d-m-Y');
                             ?>
                         </ul>
                     </td>
-                    <!-- <td>
-                        <button class="add-comment-btn" data-hora="<?php echo htmlspecialchars($hora); ?>">Afegir
-                            Comentari</button>
-                    </td> -->
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    function updateHoraActual() {
-        const now = new Date();
-        const formattedTime = now.toLocaleTimeString();
-        document.getElementById('hora-actual').textContent = formattedTime;
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        function updateHoraActual() {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString();
+            document.getElementById('hora-actual').textContent = formattedTime;
+        }
 
-    setInterval(updateHoraActual, 1000);
-    updateHoraActual(); // Inicializa la hora actual al cargar la página
-});
+        setInterval(updateHoraActual, 1000);
+        updateHoraActual();
+    });
 </script>

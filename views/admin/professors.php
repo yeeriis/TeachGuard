@@ -1,5 +1,5 @@
 <div id="drop-area-professors" class="drop-area">
-    <div class="drop-instruction">Arrastra y suelta un archivo TXT aquí</div>
+    <div class="drop-instruction">Arrossega i deixa anar un arxiu .txt</div>
     <input type="file" id="file-input-professors" accept=".txt">
 </div>
 <div id="table-container" class="table-container"></div>

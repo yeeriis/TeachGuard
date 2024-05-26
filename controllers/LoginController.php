@@ -87,9 +87,9 @@ class LoginController
     public function cerrarSesion() {
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();
-            echo "Cerrando sesión...";
+            echo "Tancant Sessió...";
         } else {
-            echo "La sesión no está iniciada.";
+            echo "La sessió no està iniciada.";
         }
         echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=index.php'>";
     }

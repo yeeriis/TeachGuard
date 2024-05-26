@@ -23,14 +23,12 @@ $fechaActual = date('d-m-Y');
                     <td class="hidden-mobile">
                         <ul>
                             <?php
-                            $horario = new Horario(); // Crear una instancia de la clase Horario
+                            $horario = new Horario(); 
                             $profesoresGuardia = $horario->obtenerProfesoresGuardia($hora);
 
-                            // Verificar si se obtuvieron resultados
                             if ($profesoresGuardia) {
-                                // Iterar sobre los profesores de guardia y mostrarlos en una lista
                                 foreach ($profesoresGuardia as $profesor) {
-                                    echo "<li>" . htmlspecialchars($profesor['professor']) . "</li>";
+                                    echo "<li>" . htmlspecialchars($profesor['nom']) . " " .htmlspecialchars($profesor['cognoms']) . "</li>";
                                 }
                             } else {
                                 echo "<li>No hay profesores de guardia para esta hora.</li>";

@@ -1,3 +1,10 @@
+toastr.options = {
+    "positionClass": "toast-bottom-right",
+    "timeOut": "5000",
+    "closeButton": true,
+    "progressBar": true
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const dropAreaAules = document.getElementById('drop-area-aules');
     const fileInputAules = document.getElementById('file-input-aules');
@@ -6,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (file.type === 'text/plain') {
             readFileContentAules(file);
         } else {
-            alert('Por favor, selecciona un archivo TXT.');
+            alert('Si us plau, selecciona un arxiu TXT.');
         }
     }
 
@@ -24,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const tableBody = document.getElementById('table-body-aules');
         tableBody.innerHTML = '';
 
+        const promises = [];
+
         lines.forEach((line) => {
             const matches = line.match(/"([^"]+)"/g);
             if (matches && matches.length >= 2) {
@@ -35,9 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${nombre_curso}</td>
                 `;
                 tableBody.appendChild(row);
-                sendDataToServerAules(nombre_aula, nombre_curso);
+                promises.push(sendDataToServerAules(nombre_aula, nombre_curso));
             }
         });
+
+        Promise.all(promises)
+            .then(() => {
+                toastr.success('Totes les dades han estat pujades correctament.');
+            })
+            .catch((error) => {
+                toastr.error('Error al enviar les dades al servidor.');
+            });
     }
 
     function sendDataToServerAules(nombre_aula, nombre_curso) {
@@ -45,21 +62,18 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('nombre_aula', nombre_aula);
         formData.append('nombre_curso', nombre_curso);
 
-        fetch('views/admin/processarArxiu.php', {
+        return fetch('views/admin/processarArxiu.php', {
             method: 'POST',
             body: formData
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Error al enviar los datos al servidor.');
+                throw new Error('Error al enviar les dades al servidor.');
             }
             return response.json();
         })
         .then(data => {
-            console.log('Datos insertados correctamente:', data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
+            return data;
         });
     }
 

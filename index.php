@@ -12,6 +12,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="script-aules.js"></script>
     <script src="script-professors.js"></script>
     <script src="script-horaris.js"></script>
@@ -48,7 +50,7 @@ session_start();
     }
 
     // Funcions per a tractar els arxius del Drag&Drop
-
+    
     $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
     switch ($action) {
@@ -60,4 +62,5 @@ session_start();
     ?>
 
 </body>
+
 </html>

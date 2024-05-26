@@ -4,25 +4,30 @@ require_once("database.php");
 
 class Horario extends Database {
     protected $db;
-    public function obtenerProfesoresGuardia() {
-        try {
-            $diaSemanaActual = date('N');
-    
-            $sql = "SELECT DISTINCT professor 
-                    FROM horaris 
-                    WHERE dia = ? AND asignatura = 'G'
-                    LIMIT 4";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(1, $diaSemanaActual, PDO::PARAM_INT);
-            $stmt->execute();
-            $profesoresGuardia = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $stmt->closeCursor();
-            return $profesoresGuardia;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return null;
-        }
+
+    public function obtenerProfesoresGuardia()
+{
+    try {
+        $diaSemanaActual = date('N');
+
+        $sql = "SELECT DISTINCT p.nom, p.cognoms
+                FROM horaris h
+                INNER JOIN professors p ON h.professor = p.codi_professor
+                WHERE h.dia = ? AND h.asignatura = 'G'
+                LIMIT 4";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(1, $diaSemanaActual, PDO::PARAM_INT);
+        $stmt->execute();
+        $profesoresGuardia = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+
+        return $profesoresGuardia;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return null;
     }
+}
+
 
     public function obtenerDiaSemanaActual() {
         try {
@@ -120,17 +125,47 @@ class Horario extends Database {
     }
     public function guardarAbsencia($diaId, $hora, $professorId) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO absencies (dia_id, hora, professor_id) VALUES (?, ?, ?)");
-            $stmt->bindParam(1, $diaId, PDO::PARAM_INT);
-            $stmt->bindParam(2, $hora, PDO::PARAM_STR);
-            $stmt->bindParam(3, $professorId, PDO::PARAM_STR);
-            $stmt->execute();
-            return true;
+            // Comprobar si ya existe una ausencia para el mismo día, hora y profesor
+            $stmt_check = $this->db->prepare("SELECT COUNT(*) FROM absencies WHERE dia_id = ? AND hora = ? AND professor_id = ?");
+            $stmt_check->bindParam(1, $diaId, PDO::PARAM_INT);
+            $stmt_check->bindParam(2, $hora, PDO::PARAM_STR);
+            $stmt_check->bindParam(3, $professorId, PDO::PARAM_INT);
+            $stmt_check->execute();
+            $count = $stmt_check->fetchColumn();
+    
+            if ($count > 0) {
+                // La ausencia ya existe, no la insertes
+                return false;
+            } else {
+                // La ausencia no existe, procede con la inserción
+                $stmt_insert = $this->db->prepare("INSERT INTO absencies (dia_id, hora, professor_id) VALUES (?, ?, ?)");
+                $stmt_insert->bindParam(1, $diaId, PDO::PARAM_INT);
+                $stmt_insert->bindParam(2, $hora, PDO::PARAM_STR);
+                $stmt_insert->bindParam(3, $professorId, PDO::PARAM_INT);
+                $stmt_insert->execute();
+                return true;
+            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             return false;
         }
     }
+
+    public function ausenciaExiste($diaId, $hora, $professorId) {
+        try {
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM absencies WHERE dia_id = ? AND hora = ? AND professor_id = ?");
+            $stmt->bindParam(1, $diaId, PDO::PARAM_INT);
+            $stmt->bindParam(2, $hora, PDO::PARAM_STR);
+            $stmt->bindParam(3, $professorId, PDO::PARAM_INT);
+            $stmt->execute();
+            $count = $stmt->fetchColumn();
+            return $count > 0;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
     
 
 }
