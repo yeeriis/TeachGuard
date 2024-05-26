@@ -1,6 +1,6 @@
 <div id="drop-area-horarios" class="drop-area">
     <div class="drop-instruction">Arrossega i deixa anar un arxiu .txt</div>
-    <input type="file" id="file-input-horarios" accept=".txt">
+    <input class='boton' type="file" id="file-input-horarios" accept=".txt">
 </div>
 <div id="table-container" class="table-container"></div>
 

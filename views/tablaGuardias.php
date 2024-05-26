@@ -18,7 +18,7 @@ $diaActual = date('N');
         <tbody>
             <?php foreach ($horas as $hora): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($hora); ?></td>
+                    <td class="hores"><?php echo htmlspecialchars($hora); ?></td>
                     <td>
                         <ul>
                             <?php
@@ -27,11 +27,11 @@ $diaActual = date('N');
 
                             if ($profesoresGuardia) {
                                 foreach ($profesoresGuardia as $profesor) {
-                                    echo "<li>" . htmlspecialchars($profesor['nom']) . " " . htmlspecialchars($profesor['cognoms']) . "</li>";
+                                    echo "<p>" . htmlspecialchars($profesor['nom']) . " " . htmlspecialchars($profesor['cognoms']) . "</p>";
                                     echo "<br>";
                                 }
                             } else {
-                                echo "<li>No hi ha professors de guàrdia per a aquesta hora.</li>";
+                                echo "<p>No hi ha professors de guàrdia per a aquesta hora.</p>";
                             }
                             ?>
                         </ul>
@@ -62,11 +62,11 @@ $diaActual = date('N');
 
                             if ($asignaciones) {
                                 foreach ($asignaciones as $asignacion) {
-                                    echo "<li>$asignacion</li>";
+                                    echo "<p>$asignacion</p>";
                                     echo "<br>";
                                 }
                             } else {
-                                echo "<li>No hi ha assignacions per a aquesta hora.</li>";
+                                echo "<p>No hi ha assignacions per a aquesta hora.</p>";
                             }
                             ?>
                         </ul>
@@ -79,11 +79,11 @@ $diaActual = date('N');
                             if ($profesoresAusentes) {
                                 foreach ($profesoresAusentes as $profesor) {
                                     $aula = $horario->obtenerAulaProfesorAusente($profesor['id_profesor'], $hora, $diaActual);
-                                    echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . " - Aula: " . htmlspecialchars($aula) . "</li>";
+                                    echo "<p>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . " - Aula: " . htmlspecialchars($aula) . "</p>";
                                     echo "<br>";
                                 }
                             } else {
-                                echo "<li>No hi ha professors absents per a aquesta hora.</li>";
+                                echo "<p>No hi ha professors absents per a aquesta hora.</p>";
                             }
                             ?>
                         </ul>

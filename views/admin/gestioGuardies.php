@@ -22,15 +22,15 @@ $fechaActual = date('d-m-Y');
                     <td class="hidden-mobile">
                         <ul>
                             <?php
-                            $horario = new Horario(); 
+                            $horario = new Horario();
                             $profesoresGuardia = $horario->obtenerProfesoresGuardia($hora);
 
                             if ($profesoresGuardia) {
                                 foreach ($profesoresGuardia as $profesor) {
-                                    echo "<li>" . htmlspecialchars($profesor['nom']) . " " .htmlspecialchars($profesor['cognoms']) . "</li>";
+                                    echo "<li>" . htmlspecialchars($profesor['nom']) . " " . htmlspecialchars($profesor['cognoms']) . "</li>";
                                 }
                             } else {
-                                echo "<li>No hay profesores de guardia para esta hora.</li>";
+                                echo "<li>No hi ha professors de guàrdia per a aquesta hora.</li>";
                             }
                             ?>
                         </ul>
@@ -47,7 +47,7 @@ $fechaActual = date('d-m-Y');
                                     echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . "</li>";
                                 }
                             } else {
-                                
+
                             }
                             ?>
                         </ul>
@@ -72,16 +72,36 @@ $fechaActual = date('d-m-Y');
         </tbody>
     </table>
     <button id="guardarButton">Guardar</button>
+    <button id="pdfButton">Generar PDF</button>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        function updateHoraActual() {
-            const now = new Date();
-            const formattedTime = now.toLocaleTimeString();
-            document.getElementById('hora-actual').textContent = formattedTime;
-        }
+        document.getElementById('pdfButton').addEventListener('click', function () {
+            window.location.href = 'generarPDF.php';
+        });
+        const pdfButton = document.getElementById('pdfButton');
+        pdfButton.addEventListener('click', function () {
+            const tableHTML = document.querySelector('.taulaGestioGuardiesAdmin').outerHTML;
 
-        setInterval(updateHoraActual, 1000);
-        updateHoraActual();
+            fetch('index.php?controller=Admin&action=generarPDF', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ html: tableHTML })
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'gestioGuardies.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error('Error:', error));
+        });
     });
 </script>

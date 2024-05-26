@@ -23,12 +23,11 @@ class LoginController
             if ($usuario && $usuario["contrasena"] === $contrasena) {
                 $_SESSION["nombre"] = $nombre;
                 $_SESSION["rol"] = $usuario["rol"];
-                echo "Redirigiendo...";
+                echo "Redirigint...";
                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarMainAdmin'>";
-                session_start();
                 exit();
             } else {
-                echo "Error de inicio de sesión";
+                echo "Error d'inici de sessió";
                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginAdmin'>";
             }
         }

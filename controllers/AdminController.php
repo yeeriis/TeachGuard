@@ -3,7 +3,7 @@
 require "models/horario.php";
 
 class AdminController
-{   
+{
     // Funció per a comprovar si el rol de l'usuari es administrador
     private function autenticarAdmin()
     {
@@ -48,4 +48,32 @@ class AdminController
     }
 
     // FI Funcions per a mostrar les diferents vistes
+
+    // Funció per a generar PDFs de la taula de guardies
+
+    public function generarPDF()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $html = $data['html'];
+
+            // Incluye el autoload de Composer
+            require 'vendor/autoload.php';
+
+            // Crea un nuevo documento PDF
+            $pdf = new TCPDF();
+            $pdf->AddPage();
+
+            // Configura el contenido HTML
+            $pdf->writeHTML($html, true, false, true, false, '');
+
+            // Genera el PDF y fuerza la descarga
+            $pdfOutput = $pdf->Output('gestioGuardies.pdf', 'S');
+
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="gestioGuardies.pdf"');
+            echo $pdfOutput;
+        }
+    }
+
 }

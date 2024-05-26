@@ -248,6 +248,11 @@ body {
     list-style: none;
 }
 
+.taulaGestioGuardiesAdmin td ul {
+    text-align: center;
+    padding-left: 0;
+}
+
 .profesores-clase-select {
     background-color: #2A9D8F;
     border-radius: 60px;
@@ -277,7 +282,7 @@ body {
     font-size: large;
 }
 
-#guardarButton {
+#guardarButton, #pdfButton {
     background-color: #2A9D8F;
     border-radius: 60px;
     padding: 1%;
@@ -290,7 +295,7 @@ body {
 .move-left-btn:hover,
 .move-right-btn:hover,
 .add-comment-btn:hover,
-#guardarButton:hover {
+#guardarButton:hover, #pdfButton:hover {
     opacity: 0.7;
     border-radius: 0;
 }
@@ -314,6 +319,7 @@ li.faltados-list {
 
 .data-actual {
     color: #E0F2E9;
+    font-size: 30px;
 }
 
 /* Fin de estilos para tabla Guardias Profesores de Admin */
@@ -360,7 +366,7 @@ li.faltados-list {
         display: none;
     }
 
-    #guardarButton {
+    #guardarButton, #pdfButton {
         margin-top: 5%;
         padding: 2%;
         font-size: 20px
@@ -376,5 +382,54 @@ li.faltados-list {
         padding: 8%;
         max-width: calc(70% - 40px);
         margin-bottom: 20px;
+    }
+
+    .boton {
+        padding: 10px 15px;
+        font-size: 11px;
+    }
+    
+    #logo img{
+        padding-left: 1%;
+        height: 60px;
+    }
+
+    #menu {
+        height: 50px;
+    }
+
+    #data-table tr th {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    #data-table tr td {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    .taulaGestioGuardiesAdmin td ul , .taulaGestioGuardiesAdmin td p {
+        font-size: 10px;
+
+    }
+    td.hores {
+        font-size: 10px;
+    }
+
+    .data-actual h2 {
+        font-size: 20px;
+    }
+
+    .loginDiv {
+        width: 300px;
+    }
+
+    .inputContainer input {
+        margin-left: 1%;
+        margin-right: 5%;
+    }
+
+    #labelContrasena, #labelNombre {
+        font-size: 10px;
     }
 }
