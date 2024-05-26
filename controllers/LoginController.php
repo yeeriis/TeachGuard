@@ -5,13 +5,14 @@ require "models/usuario.php";
 class LoginController
 {
 
-    // Funciones para el login de Admin
+    // Funció per mostrar la vista del loging de l'admin
     public function mostrarLoginAdmin()
     {
         require "views/menu.php";
         require_once "views/admin/loginAdmin.php";
     }
 
+    // Funció per a autenticar l'administrador
     public function autenticarAdmin() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nombre = $_POST["nombre"];
@@ -20,37 +21,36 @@ class LoginController
             $usuario = Usuario::obtenerUsuarioPorNombre($nombre);
     
             if ($usuario && $usuario["contrasena"] === $contrasena) {
-                if ($usuario["rol"] === "administrador") {
-                    $_SESSION["nombre"] = $nombre;
-                    echo "Redirigint...";
-                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarMainAdmin'>";
-                    exit();
-                } else {
-                    echo "No tens permisos per accedir a aquesta àrea.";
-                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginAdmin'>";
-
-                }
+                $_SESSION["nombre"] = $nombre;
+                $_SESSION["rol"] = $usuario["rol"];
+                echo "Redirigiendo...";
+                echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarMainAdmin'>";
+                session_start();
+                exit();
             } else {
-                echo "Error de logueig";
+                echo "Error de inicio de sesión";
                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=index.php?controller=Login&action=mostrarLoginAdmin'>";
             }
-            
         }
     }
-
+    
+    // Funció per a mostrar la plana principal de l'administrador.
     public function mostrarMainAdmin()
     {
+        $this->autenticarAdmin();
         require_once "views/menuUsuario.php";
         require_once "views/admin/main.php";
     }
 
-    // Funciones para el login del conserge
+    // Funció per a mostrar el login del conserge
     
     public function mostrarLoginConserge()
     {
         require "views/menu.php";
         require_once "views/conserge/loginConserge.php";
     }
+
+    // Funció per a autenticar al conserge
 
     public function autenticarConserge() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -78,11 +78,14 @@ class LoginController
         }
     }
 
+    // Funció per a mostrar la pagina principal del conserge
     public function mostrarMainConserge()
     {
         require_once "views/menuUsuario.php";
         require_once "views/conserge/main.php";
     }
+
+    // Funció per a tancar la sessió
 
     public function cerrarSesion() {
         if (session_status() === PHP_SESSION_ACTIVE) {
@@ -92,7 +95,5 @@ class LoginController
             echo "La sessió no està iniciada.";
         }
         echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=index.php'>";
-    }
-
-    
+    }   
 }

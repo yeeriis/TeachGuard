@@ -10,7 +10,6 @@ $fechaActual = date('d-m-Y');
             <tr>
                 <th>Hora</th>
                 <th class="hidden-mobile">Professors de Guardia</th>
-                <!-- <th>Comentaris</th> -->
                 <th>Professors Absents</th>
                 <th>Fletxes d'acció</th>
                 <th>Tots els professors</th>
@@ -36,12 +35,22 @@ $fechaActual = date('d-m-Y');
                             ?>
                         </ul>
                     </td>
-                    <!-- <td>
-                        <button class="add-comment-btn" data-hora="<?php echo htmlspecialchars($hora); ?>">Afegir
-                            Comentari</button>
-                    </td> -->
                     <td>
-                        <li class="faltados-list" data-hora="<?php echo htmlspecialchars($hora); ?>"></li>
+                        <ul class="faltados-list" data-hora="<?php echo htmlspecialchars($hora); ?>">
+                            <?php
+                            $diaSemanaActual = date('N');
+                            $profesoresAusentes = $horario->obtenerProfesoresAusentes($hora);
+
+                            if ($profesoresAusentes) {
+                                foreach ($profesoresAusentes as $profesor) {
+                                    $aula = $horario->obtenerAulaProfesorAusente($profesor['codi_professor'], $hora, $diaSemanaActual);
+                                    echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . "</li>";
+                                }
+                            } else {
+                                
+                            }
+                            ?>
+                        </ul>
                     </td>
                     <td>
                         <button class="move-left-btn" data-hora="<?php echo htmlspecialchars($hora); ?>"><img
@@ -64,3 +73,15 @@ $fechaActual = date('d-m-Y');
     </table>
     <button id="guardarButton">Guardar</button>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function updateHoraActual() {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString();
+            document.getElementById('hora-actual').textContent = formattedTime;
+        }
+
+        setInterval(updateHoraActual, 1000);
+        updateHoraActual();
+    });
+</script>

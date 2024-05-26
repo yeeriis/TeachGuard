@@ -34,7 +34,7 @@ if (isset($_POST['codi_horari']) && isset($_POST['classe']) && isset($_POST['pro
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 } else {
-    echo json_encode(['success' => false, 'error' => 'No se han rebut les dades esperades.']);
+    echo json_encode(['success' => false, 'error' => 'No s\'han rebut les dades esperades.']);
 }
 
 ?>

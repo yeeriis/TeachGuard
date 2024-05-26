@@ -1,5 +1,6 @@
 <?php
 $fechaActual = date('d-m-Y');
+$diaActual = date('N');
 ?>
 <div class="taulaGestioGuardiesAdmin">
     <div class="data-actual">
@@ -26,7 +27,7 @@ $fechaActual = date('d-m-Y');
 
                             if ($profesoresGuardia) {
                                 foreach ($profesoresGuardia as $profesor) {
-                                    echo "<li>" . htmlspecialchars($profesor['nom']) . htmlspecialchars($profesor['cognoms']) . "</li>";
+                                    echo "<li>" . htmlspecialchars($profesor['nom']) . " " . htmlspecialchars($profesor['cognoms']) . "</li>";
                                     echo "<br>";
                                 }
                             } else {
@@ -45,14 +46,14 @@ $fechaActual = date('d-m-Y');
                                 $numProfesoresGuardia = count($profesoresGuardia);
                                 $numAusencias = count($ausencias);
                                 $i = 0;
-                        
+
                                 foreach ($ausencias as $ausencia) {
                                     if ($i < $numProfesoresGuardia) {
                                         $profesorGuardia = $profesoresGuardia[$i];
                                         $asignaciones[] = htmlspecialchars($profesorGuardia['nom']) . " " . htmlspecialchars($profesorGuardia['cognoms']) . " -> " . htmlspecialchars($ausencia['nom']) . " " . htmlspecialchars($ausencia['cognoms']);
                                         $i++;
                                     } else {
-                                        echo "El/La professor/a " . htmlspecialchars($ausencia['nom']) . " " . htmlspecialchars($ausencia['cognoms']) . " no té un profesor de guàrdia assignat.";
+                                        echo "El/La professor/a " . htmlspecialchars($ausencia['nom']) . " " . htmlspecialchars($ausencia['cognoms']) . " no té un professor de guàrdia assignat.";
                                         echo "<br>";
                                         break;
                                     }
@@ -77,7 +78,8 @@ $fechaActual = date('d-m-Y');
 
                             if ($profesoresAusentes) {
                                 foreach ($profesoresAusentes as $profesor) {
-                                    echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . "</li>";
+                                    $aula = $horario->obtenerAulaProfesorAusente($profesor['id_profesor'], $hora, $diaActual);
+                                    echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . " - Aula: " . htmlspecialchars($aula) . "</li>";
                                     echo "<br>";
                                 }
                             } else {

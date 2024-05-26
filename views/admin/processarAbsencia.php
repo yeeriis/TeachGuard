@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$horario->guardarAbsencia($diaId, $hora, $professorId)) {
             // Comprobar si la ausencia ya existe
             if ($horario->ausenciaExiste($diaId, $hora, $professorId)) {
-                $duplicados[] = 'La absència ja existeix per al professor amb ID ' . $professorId;
+                $duplicados[] = 'L\'absència ja existeix per al professor amb ID ' . $professorId;
             } else {
                 $errores[] = 'Error al desar la absència per al professor amb ID ' . $professorId;
             }
