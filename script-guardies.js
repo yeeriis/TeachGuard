@@ -11,18 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedOption = selectElement.options[selectElement.selectedIndex];
             const professorId = selectedOption.value;
             const professorName = selectedOption.text;
-
+    
             const faltadosList = document.querySelector(`.faltados-list[data-hora="${hora}"]`);
             const listItem = document.createElement('li');
             listItem.textContent = professorName;
             listItem.dataset.professorId = professorId;
             faltadosList.appendChild(listItem);
-
-            ausencias.push({ diaId: getDiaId(), hora: hora, professorId: professorId });
+    
+            ausencias.push({ diaId: getDiaId(), hora: hora, professorId: professorId }); // Mantener professorId como cadena
             selectedOption.remove();
         });
     });
-
+    
     moveRightButtons.forEach(button => {
         button.addEventListener('click', function() {
             const hora = this.dataset.hora;
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 option.textContent = professorName;
                 selectElement.appendChild(option);
                 faltadosList.removeChild(listItem);
+
                 const index = ausencias.findIndex(ausencia => ausencia.hora === hora && ausencia.professorId === professorId);
                 if (index !== -1) {
                     ausencias.splice(index, 1);
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     guardarButton.addEventListener('click', function() {
-        console.log(ausencias);
+        console.log(ausencias); // Verificar en la consola que los datos se envían correctamente
 
         fetch('views/admin/processarAbsencia.php', {
             method: 'POST',

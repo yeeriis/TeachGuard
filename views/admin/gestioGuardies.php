@@ -43,7 +43,7 @@ $fechaActual = date('d-m-Y');
 
                             if ($profesoresAusentes) {
                                 foreach ($profesoresAusentes as $profesor) {
-                                    $aula = $horario->obtenerAulaProfesorAusente($profesor['codi_professor'], $hora, $diaSemanaActual);
+                                    // $aula = $horario->obtenerAulaProfesorAusente($profesor['professor'], $hora, $diaSemanaActual);
                                     echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . "</li>";
                                 }
                             } else {

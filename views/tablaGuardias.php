@@ -28,7 +28,6 @@ $diaActual = date('N');
                             if ($profesoresGuardia) {
                                 foreach ($profesoresGuardia as $profesor) {
                                     echo "<p>" . htmlspecialchars($profesor['nom']) . " " . htmlspecialchars($profesor['cognoms']) . "</p>";
-                                    echo "<br>";
                                 }
                             } else {
                                 echo "<p>No hi ha professors de guàrdia per a aquesta hora.</p>";
@@ -78,10 +77,10 @@ $diaActual = date('N');
 
                             if ($profesoresAusentes) {
                                 foreach ($profesoresAusentes as $profesor) {
-                                    $aula = $horario->obtenerAulaProfesorAusente($profesor['id_profesor'], $hora, $diaActual);
-                                    echo "<p>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . " - Aula: " . htmlspecialchars($aula) . "</p>";
+                                    $aula = $horario->obtenerAulaProfesorAusente($profesor['professor'], $hora, $diaActual);
+                                    echo "<p>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . " - Aula: " . htmlspecialchars($profesor['aula']) . "</p>";
                                     echo "<br>";
-                                }
+                                }                                
                             } else {
                                 echo "<p>No hi ha professors absents per a aquesta hora.</p>";
                             }

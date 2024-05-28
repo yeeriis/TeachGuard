@@ -12,36 +12,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    require_once('../../models/database.php');
-    require_once('../../models/horario.php');
+    require_once ('../../models/database.php');
+    require_once ('../../models/horario.php');
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $horario = new Horario($db);
+    $horario = new Horario();
 
     $errores = [];
-    $duplicados = [];
     foreach ($data as $item) {
+        // Agregar registros de depuración
+        error_log("Dia ID: " . $item['diaId']);
+        error_log("Hora: " . $item['hora']);
+        error_log("Professor ID: " . $item['professorId']);
+
         $diaId = $item['diaId'];
         $hora = $item['hora'];
         $professorId = $item['professorId'];
         if (!$horario->guardarAbsencia($diaId, $hora, $professorId)) {
-            // Comprobar si la ausencia ya existe
-            if ($horario->ausenciaExiste($diaId, $hora, $professorId)) {
-                $duplicados[] = 'L\'absència ja existeix per al professor amb ID ' . $professorId;
-            } else {
-                $errores[] = 'Error al desar la absència per al professor amb ID ' . $professorId;
-            }
+            $errores[] = 'Error al desar la absència per al professor amb ID ' . $professorId;
         }
     }
 
-    if (empty($errores) && empty($duplicados)) {
+    if (empty($errores)) {
         echo json_encode(['success' => true]);
     } else {
-        echo json_encode(['success' => false, 'message' => implode(', ', array_merge($errores, $duplicados))]);
+        echo json_encode(['success' => false, 'message' => implode(', ', $errores)]);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Mètode de solicitud no vàlid']);
 }
-?>
