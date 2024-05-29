@@ -1,6 +1,5 @@
 <?php
 $fechaActual = date('d-m-Y');
-$diaActual = date('N');
 ?>
 <div class="taulaGestioGuardiesAdmin">
     <div class="data-actual">
@@ -73,20 +72,22 @@ $diaActual = date('N');
                     <td>
                         <ul class="faltados-list" data-hora="<?php echo htmlspecialchars($hora); ?>">
                             <?php
+                            $diaActual = date('N'); // Asegúrate de definir correctamente $diaActual
                             $profesoresAusentes = $horario->obtenerProfesoresAusentes($hora);
 
                             if ($profesoresAusentes) {
                                 foreach ($profesoresAusentes as $profesor) {
-                                    $aula = $horario->obtenerAulaProfesorAusente($profesor['professor'], $hora, $diaActual);
                                     echo "<p>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . " - Aula: " . htmlspecialchars($profesor['aula']) . "</p>";
                                     echo "<br>";
-                                }                                
+                                }
                             } else {
                                 echo "<p>No hi ha professors absents per a aquesta hora.</p>";
                             }
                             ?>
                         </ul>
                     </td>
+
+
                 </tr>
             <?php endforeach; ?>
         </tbody>

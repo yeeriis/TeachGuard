@@ -38,14 +38,22 @@ class AdminController
     }
 
     public function mostrarGestioGuardies()
-    {
-        $this->autenticarAdmin();
-        $horario = new Horario();
-        $horas = $horario->obtenirHores();
-        $todosProfesores = $horario->obtenerProfesores();
-        require "views/menuUsuario.php";
-        require_once "views/admin/gestioGuardies.php";
+{
+    $this->autenticarAdmin();
+    $horario = new Horario();
+    $horas = $horario->obtenirHores();
+    
+    $diaActual = date('N'); // Obtener el día actual de la semana (1 para lunes, 7 para domingo)
+    
+    $profesoresPorHora = [];
+    foreach ($horas as $hora) {
+        $profesoresPorHora[$hora] = $horario->obtenerProfesoresConClase($hora, $diaActual);
     }
+    
+    require "views/menuUsuario.php";
+    require_once "views/admin/gestioGuardies.php";
+}
+
 
     // FI Funcions per a mostrar les diferents vistes
 

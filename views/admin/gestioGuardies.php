@@ -60,13 +60,28 @@ $fechaActual = date('d-m-Y');
                     </td>
                     <td>
                         <select class="profesores-clase-select" data-hora="<?php echo htmlspecialchars($hora); ?>">
-                            <?php foreach ($todosProfesores as $profesor): ?>
-                                <option value="<?php echo htmlspecialchars($profesor['codi_professor']); ?>">
-                                    <?php echo htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']); ?>
-                                </option>
-                            <?php endforeach; ?>
+                            <?php
+                            if (isset($profesoresPorHora[$hora])) {
+                                $profesoresConClase = $profesoresPorHora[$hora];
+                                if ($profesoresConClase) {
+                                    foreach ($profesoresConClase as $profesor) {
+                                        echo '<option value="' . htmlspecialchars($profesor['codi_professor']) . '">';
+                                        echo htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . ' - Aula: ' . htmlspecialchars($profesor['aula']);
+                                        echo '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No hi ha professors disponibles</option>';
+                                }
+                            } else {
+                                echo '<option value="">No hi ha professors disponibles</option>';
+                            }
+                            ?>
                         </select>
                     </td>
+
+
+
+
                 </tr>
             <?php endforeach; ?>
         </tbody>

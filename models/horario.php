@@ -49,11 +49,16 @@ class Horario extends Database
         }
     }
 
-    // Funció per a obtenir tots els professors
-    public function obtenerProfesores()
+    // Funció per a obtenir tots els professors que tenen clase aquest dia i hora
+    public function obtenerProfesoresConClase($hora, $dia)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM professors");
+            $stmt = $this->db->prepare("SELECT p.codi_professor, p.nom, p.cognoms, h.aula
+                                        FROM horaris h
+                                        INNER JOIN professors p ON h.professor = p.codi_professor
+                                        WHERE h.hora = :hora AND h.dia = :dia");
+            $stmt->bindParam(':hora', $hora, PDO::PARAM_STR);
+            $stmt->bindParam(':dia', $dia, PDO::PARAM_INT);
             $stmt->execute();
             $profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
@@ -63,6 +68,9 @@ class Horario extends Database
             return null;
         }
     }
+
+
+
 
     // Funció per a obtenir els professors per dia
     public function obtenerProfesoresPorDia($diaSemana)
@@ -84,27 +92,6 @@ class Horario extends Database
         }
     }
 
-    // Funció per a obtenir els professors absents
-    public function obtenerProfesoresAusentes($hora)
-    {
-        try {
-            $diaSemanaActual = date('N');
-            $stmt = $this->db->prepare("SELECT p.nom, p.cognoms
-                                        FROM absencies a
-                                        INNER JOIN professors p ON a.professor_id = p.codi_professor
-                                        WHERE a.dia_id = ? AND a.hora = ?");
-            $stmt->bindParam(1, $diaSemanaActual, PDO::PARAM_INT);
-            $stmt->bindParam(2, $hora, PDO::PARAM_STR);
-            $stmt->execute();
-            $profesoresAusentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $stmt->closeCursor();
-            return $profesoresAusentes;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return null;
-        }
-    }
-
     // Funció per a obtenir els professors absents per dia i hora
     public function obtenerProfesoresAusentesPorDiaYHora($dia, $hora)
     {
@@ -120,6 +107,28 @@ class Horario extends Database
     }
 
     // Funció per a obtenir l'aula del professor absent
+    public function obtenerProfesoresAusentes($hora)
+    {
+        try {
+            $diaSemanaActual = date('N');
+            $stmt = $this->db->prepare("SELECT p.codi_professor, p.nom, p.cognoms, h.aula
+            FROM absencies a
+            INNER JOIN professors p ON a.professor_id = p.codi_professor
+            INNER JOIN horaris h ON a.professor_id = h.professor AND a.dia_id = h.dia AND a.hora = h.hora
+            WHERE a.dia_id = ? AND a.hora = ?
+            ");
+            $stmt->bindParam(1, $diaSemanaActual, PDO::PARAM_INT);
+            $stmt->bindParam(2, $hora, PDO::PARAM_STR);
+            $stmt->execute();
+            $profesoresAusentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            return $profesoresAusentes;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+
     public function obtenerAulaProfesorAusente($id_profesor, $hora, $dia)
     {
         try {
@@ -130,14 +139,13 @@ class Horario extends Database
             $stmt->bindParam(':dia', $dia, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             return $result ? $result['aula'] : 'No assignat';
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             return null;
         }
     }
-    
 
 
     // Funció per a obtenir les hores
@@ -171,28 +179,6 @@ class Horario extends Database
             return false;
         }
     }
-
-
-
-    // Funció per a saber si l'absencia existeix o no
-    public function ausenciaExiste($diaId, $hora, $professorId)
-    {
-        try {
-            $stmt = $this->db->prepare("SELECT COUNT(*) FROM absencies WHERE dia_id = ? AND hora = ? AND professor_id = ?");
-            $stmt->bindParam(1, $diaId, PDO::PARAM_INT);
-            $stmt->bindParam(2, $hora, PDO::PARAM_STR);
-            $stmt->bindParam(3, $professorId, PDO::PARAM_INT);
-            $stmt->execute();
-            $count = $stmt->fetchColumn();
-            return $count > 0;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
-
-
-
 }
 
 

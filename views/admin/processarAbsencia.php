@@ -2,18 +2,18 @@
 header('Content-Type: application/json');
 
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0); // Desactivar la visualización de errores en producción
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($data === null) {
-        echo json_encode(['success' => false, 'message' => 'JSON invàlid']);
+        echo json_encode(['success' => false, 'message' => 'JSON inválido']);
         exit;
     }
 
-    require_once ('../../models/database.php');
-    require_once ('../../models/horario.php');
+    require_once('../../models/database.php');
+    require_once('../../models/horario.php');
 
     $database = new Database();
     $db = $database->getConnection();
@@ -22,16 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $errores = [];
     foreach ($data as $item) {
-        // Agregar registros de depuración
-        error_log("Dia ID: " . $item['diaId']);
-        error_log("Hora: " . $item['hora']);
-        error_log("Professor ID: " . $item['professorId']);
+        try {
+            $diaId = $item['diaId'];
+            $hora = $item['hora'];
+            $professorId = $item['professorId'];
 
-        $diaId = $item['diaId'];
-        $hora = $item['hora'];
-        $professorId = $item['professorId'];
-        if (!$horario->guardarAbsencia($diaId, $hora, $professorId)) {
-            $errores[] = 'Error al desar la absència per al professor amb ID ' . $professorId;
+            if (!$horario->guardarAbsencia($diaId, $hora, $professorId)) {
+                throw new Exception('Error al guardar la ausencia para el profesor con ID ' . $professorId);
+            }
+        } catch (Exception $e) {
+            $errores[] = $e->getMessage();
         }
     }
 
@@ -41,5 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['success' => false, 'message' => implode(', ', $errores)]);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Mètode de solicitud no vàlid']);
+    echo json_encode(['success' => false, 'message' => 'Método de solicitud no válido']);
 }
+?>
