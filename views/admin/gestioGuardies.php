@@ -43,7 +43,6 @@ $fechaActual = date('d-m-Y');
 
                             if ($profesoresAusentes) {
                                 foreach ($profesoresAusentes as $profesor) {
-                                    // $aula = $horario->obtenerAulaProfesorAusente($profesor['professor'], $hora, $diaSemanaActual);
                                     echo "<li>" . htmlspecialchars($profesor['nom'] . ' ' . $profesor['cognoms']) . "</li>";
                                 }
                             } else {
@@ -88,6 +87,8 @@ $fechaActual = date('d-m-Y');
     </table>
     <button id="guardarButton">Guardar</button>
     <button id="pdfButton">Generar PDF</button>
+    <button id="eliminarTodasButton">Esborrar Absències</button>
+
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -117,6 +118,27 @@ $fechaActual = date('d-m-Y');
                     window.URL.revokeObjectURL(url);
                 })
                 .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('eliminarTodasButton').addEventListener('click', function () {
+            if (confirm('Estàs segur de voler eliminar totes les ausències?')) {
+                fetch('views/admin/eliminarAbsencies.php', {
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Totes les ausències han estat eliminades.');
+                            location.reload();
+                        } else {
+                            alert('Error al eliminar les ausències: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al eliminar les ausències.');
+                    });
+            }
         });
     });
 </script>

@@ -4,7 +4,7 @@ if (isset($_POST['nombre_aula']) && isset($_POST['nombre_curso'])) {
     $nombre_aula = $_POST['nombre_aula'];
     $nombre_curso = $_POST['nombre_curso'];
 
-    require_once('../../models/database.php');
+    require_once ('../../models/database.php');
 
     $database = new Database();
 

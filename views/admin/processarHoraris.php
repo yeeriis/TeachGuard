@@ -9,7 +9,7 @@ if (isset($_POST['codi_horari']) && isset($_POST['classe']) && isset($_POST['pro
     $dia = $_POST['dia'];
     $hora = $_POST['hora'];
 
-    require_once('../../models/database.php');
+    require_once ('../../models/database.php');
 
     $database = new Database();
 

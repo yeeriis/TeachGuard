@@ -6,7 +6,7 @@ if (isset($_POST['codi_professor']) && isset($_POST['nom']) && isset($_POST['cog
     $cognoms = $_POST['cognoms'];
     $carrec = $_POST['carrec'];
 
-    require_once('../../models/database.php');
+    require_once ('../../models/database.php');
 
     $database = new Database();
 

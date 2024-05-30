@@ -66,15 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al enviar les dades al servidor.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data;
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al enviar les dades al servidor.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data;
+            });
     }
 
     dropAreaAules.addEventListener('dragover', (event) => {

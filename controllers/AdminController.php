@@ -38,22 +38,21 @@ class AdminController
     }
 
     public function mostrarGestioGuardies()
-{
-    $this->autenticarAdmin();
-    $horario = new Horario();
-    $horas = $horario->obtenirHores();
-    
-    $diaActual = date('N'); // Obtener el día actual de la semana (1 para lunes, 7 para domingo)
-    
-    $profesoresPorHora = [];
-    foreach ($horas as $hora) {
-        $profesoresPorHora[$hora] = $horario->obtenerProfesoresConClase($hora, $diaActual);
-    }
-    
-    require "views/menuUsuario.php";
-    require_once "views/admin/gestioGuardies.php";
-}
+    {
+        $this->autenticarAdmin();
+        $horario = new Horario();
+        $horas = $horario->obtenirHores();
 
+        $diaActual = date('N'); 
+
+        $profesoresPorHora = [];
+        foreach ($horas as $hora) {
+            $profesoresPorHora[$hora] = $horario->obtenerProfesoresConClase($hora, $diaActual);
+        }
+
+        require "views/menuUsuario.php";
+        require_once "views/admin/gestioGuardies.php";
+    }
 
     // FI Funcions per a mostrar les diferents vistes
 
@@ -65,17 +64,11 @@ class AdminController
             $data = json_decode(file_get_contents('php://input'), true);
             $html = $data['html'];
 
-            // Incluye el autoload de Composer
             require 'vendor/autoload.php';
 
-            // Crea un nuevo documento PDF
             $pdf = new TCPDF();
             $pdf->AddPage();
-
-            // Configura el contenido HTML
             $pdf->writeHTML($html, true, false, true, false, '');
-
-            // Genera el PDF y fuerza la descarga
             $pdfOutput = $pdf->Output('gestioGuardies.pdf', 'S');
 
             header('Content-Type: application/pdf');

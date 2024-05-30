@@ -2,18 +2,18 @@
 header('Content-Type: application/json');
 
 error_reporting(E_ALL);
-ini_set('display_errors', 0); // Desactivar la visualización de errores en producción
+ini_set('display_errors', 0);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($data === null) {
-        echo json_encode(['success' => false, 'message' => 'JSON inválido']);
+        echo json_encode(['success' => false, 'message' => 'JSON invàlid']);
         exit;
     }
 
-    require_once('../../models/database.php');
-    require_once('../../models/horario.php');
+    require_once ('../../models/database.php');
+    require_once ('../../models/horario.php');
 
     $database = new Database();
     $db = $database->getConnection();
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $professorId = $item['professorId'];
 
             if (!$horario->guardarAbsencia($diaId, $hora, $professorId)) {
-                throw new Exception('Error al guardar la ausencia para el profesor con ID ' . $professorId);
+                throw new Exception('Error al desar l\'absencia per al professor amb ID ' . $professorId);
             }
         } catch (Exception $e) {
             $errores[] = $e->getMessage();
@@ -41,6 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['success' => false, 'message' => implode(', ', $errores)]);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Método de solicitud no válido']);
+    echo json_encode(['success' => false, 'message' => 'Mètode de solicitud no vàlid']);
 }
 ?>

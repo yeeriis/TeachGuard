@@ -13,7 +13,7 @@ body {
 
 /* Estilos para el menú */
 #menu {
-    background-color:darkgray;
+    background-color: darkgray;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -196,6 +196,7 @@ body {
     padding: 20px;
     width: 50%;
 }
+
 #data-table tr td {
     background-color: #60bdb2;
     border-radius: 60px;
@@ -282,7 +283,9 @@ body {
     font-size: large;
 }
 
-#guardarButton, #pdfButton {
+#guardarButton,
+#pdfButton,
+#eliminarTodasButton {
     background-color: #2A9D8F;
     border-radius: 60px;
     padding: 1%;
@@ -295,7 +298,9 @@ body {
 .move-left-btn:hover,
 .move-right-btn:hover,
 .add-comment-btn:hover,
-#guardarButton:hover, #pdfButton:hover {
+#guardarButton:hover,
+#pdfButton:hover,
+#eliminarTodasButton:hover {
     opacity: 0.7;
     border-radius: 0;
 }
@@ -309,12 +314,10 @@ li.faltados-list {
 
 .even {
     background-color: #E0F2E9;
-    /* Color para filas pares */
 }
 
 .odd {
     background-color: #F9F9ED;
-    /* Color para filas impares */
 }
 
 .data-actual {
@@ -366,17 +369,18 @@ li.faltados-list {
         display: none;
     }
 
-    #guardarButton, #pdfButton {
+    #guardarButton,
+    #pdfButton {
         margin-top: 5%;
         padding: 2%;
         font-size: 20px
     }
 
     .container {
-        flex-direction: column; /* Cambiamos la dirección del contenedor a columna */
-        align-items: center; /* Centramos los elementos horizontalmente */
+        flex-direction: column;
+        align-items: center;
     }
-    
+
     .container a {
         flex: 1 0 calc(70% - 40px);
         padding: 8%;
@@ -388,8 +392,8 @@ li.faltados-list {
         padding: 10px 15px;
         font-size: 11px;
     }
-    
-    #logo img{
+
+    #logo img {
         padding-left: 1%;
         height: 60px;
     }
@@ -408,10 +412,12 @@ li.faltados-list {
         padding: 5px;
     }
 
-    .taulaGestioGuardiesAdmin td ul , .taulaGestioGuardiesAdmin td p {
+    .taulaGestioGuardiesAdmin td ul,
+    .taulaGestioGuardiesAdmin td p {
         font-size: 10px;
 
     }
+
     td.hores {
         font-size: 10px;
     }
@@ -429,7 +435,8 @@ li.faltados-list {
         margin-right: 5%;
     }
 
-    #labelContrasena, #labelNombre {
+    #labelContrasena,
+    #labelNombre {
         font-size: 10px;
     }
 }

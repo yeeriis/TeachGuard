@@ -69,9 +69,6 @@ class Horario extends Database
         }
     }
 
-
-
-
     // Funció per a obtenir els professors per dia
     public function obtenerProfesoresPorDia($diaSemana)
     {
@@ -163,15 +160,13 @@ class Horario extends Database
     }
 
     // Funció per a guardar les absències
-    // Funció per a guardar les absències
     public function guardarAbsencia($diaId, $hora, $professorId)
     {
         try {
-            // Inserim la absencia a la BDD
             $stmt_insert = $this->db->prepare("INSERT INTO absencies (dia_id, hora, professor_id) VALUES (?, ?, ?)");
             $stmt_insert->bindParam(1, $diaId, PDO::PARAM_INT);
             $stmt_insert->bindParam(2, $hora, PDO::PARAM_STR);
-            $stmt_insert->bindParam(3, $professorId, PDO::PARAM_STR); // Asegurarse de usar PDO::PARAM_STR
+            $stmt_insert->bindParam(3, $professorId, PDO::PARAM_STR);
             $stmt_insert->execute();
             return true;
         } catch (PDOException $e) {
@@ -179,11 +174,20 @@ class Horario extends Database
             return false;
         }
     }
+
+    // Funció per a eliminar tots els registres de la taula absencies
+    public function eliminarTodasAusencias()
+    {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM absencies");
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
 }
-
-
-
-
-
 
 ?>

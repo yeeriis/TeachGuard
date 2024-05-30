@@ -22,7 +22,7 @@ $fechaActual = date('d-m-Y');
                         <ul>
                             <?php
                             $horario = new Horario();
-                            $profesoresGuardia = $horario->obtenerProfesoresGuardia($hora);
+                            $profesoresGuardia = $horario->obtenerProfesoresGuardia();
 
                             if ($profesoresGuardia) {
                                 foreach ($profesoresGuardia as $profesor) {
@@ -72,7 +72,7 @@ $fechaActual = date('d-m-Y');
                     <td>
                         <ul class="faltados-list" data-hora="<?php echo htmlspecialchars($hora); ?>">
                             <?php
-                            $diaActual = date('N'); // Asegúrate de definir correctamente $diaActual
+                            $diaActual = date('N');
                             $profesoresAusentes = $horario->obtenerProfesoresAusentes($hora);
 
                             if ($profesoresAusentes) {

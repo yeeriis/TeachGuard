@@ -92,25 +92,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 body: formData
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al enviar les dades al servidor.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                processedFiles++;
-                if (processedFiles === totalFiles) {
-                    toastr.success('Tots els horaris s\'han pujat correctament.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                processedFiles++;
-                if (processedFiles === totalFiles) {
-                    toastr.error('Hi ha hagut un error en pujar alguns horaris.');
-                }
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al enviar les dades al servidor.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    processedFiles++;
+                    if (processedFiles === totalFiles) {
+                        toastr.success('Tots els horaris s\'han pujat correctament.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    processedFiles++;
+                    if (processedFiles === totalFiles) {
+                        toastr.error('Hi ha hagut un error en pujar alguns horaris.');
+                    }
+                });
         } else {
             console.warn('S\'ha omès l\'enviament de dades perquè falten camps obligatoris.');
         }
